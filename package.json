@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@maplibre/maplibre-gl-style-spec": "^23.2.2",
+    "@versatiles/style": "^5.6.0",
+    "tsx": "^4.19.4"
+  },
+  "scripts": {
+    "build": "npm run build-styles",
+    "build-styles": "tsx build-styles.ts"
+  }
+}

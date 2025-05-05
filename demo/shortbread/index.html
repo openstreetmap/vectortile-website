@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src='https://unpkg.com/maplibre-gl@5.4.0/dist/maplibre-gl.js'></script>
+  <link href='https://unpkg.com/maplibre-gl@5.4.0/dist/maplibre-gl.css' rel='stylesheet' />
+  <style>
+    #map {position: absolute; top: 0; right: 0; bottom: 0; left: 0;}
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    var map = new maplibregl.Map({
+      container: 'map',
+      center: [0, 0],
+      zoom: 1,
+      hash: true,
+      maxZoom: 18
+    });
+    map.setStyle('eclipse.json', {
+        // The paths in the style are relative, but MapLibre GL JS needs
+        // absolute URLs. This is done below, taking the URL of the page
+        // for the path. This is because the page could be served on
+        // multiple domains, e.g. 127.0.0.1, vector.openstreetmap.org,
+        // or a specific server.
+        transformStyle: (previousStyle, nextStyle) => ({
+            ...nextStyle,
+            // make relative paths absolute
+            sprite: [...nextStyle.sprite.map(s => {
+                return {
+                    ...s,
+                    url: new URL(s.url, window.location.href).href,
+                }
+            })],
+            // URL will % encode the {} in nextStyle.glyphs, so assemble the URL manually
+            glyphs: window.location.origin + nextStyle.glyphs,
+            sources: {
+                "versatiles-shortbread": {
+                    ...nextStyle.sources["versatiles-shortbread"],
+                    tiles: [window.location.origin + nextStyle.sources["versatiles-shortbread"].tiles[0]]
+                    // tiles: ["https://vector.openstreetmap.org" + nextStyle.sources["versatiles-shortbread"].tiles[0]]
+                },
+            }
+        })
+    });
+  </script>
+</body>
+</html>

@@ -12,7 +12,7 @@ RUN mkdir -p _versatiles/shortbread/sprites && tar -C _versatiles/shortbread/spr
 ADD https://github.com/versatiles-org/versatiles-fonts/releases/download/v2.0.0/fonts.tar.gz fonts.tar.gz
 RUN mkdir -p _versatiles/shortbread/fonts && tar -C _versatiles/shortbread/fonts -xzf fonts.tar.gz
 
-FROM ghcr.io/nginxinc/nginx-unprivileged:stable-alpine as webserver
+FROM ghcr.io/nginxinc/nginx-unprivileged:stable-alpine AS webserver
 
 RUN echo "absolute_redirect off;" >/etc/nginx/conf.d/no-absolute_redirect.conf
 RUN echo "gzip_static on; gzip_proxied any;" >/etc/nginx/conf.d/gzip_static.conf

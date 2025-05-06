@@ -1,5 +1,5 @@
 # https://github.com/nginxinc/docker-nginx-unprivileged
-FROM node:22 AS versatiles
+FROM node:23 AS versatiles
 
 WORKDIR /app
 COPY *.ts package.json package-lock.json /app/

@@ -11,20 +11,8 @@
 <body>
   <div id="map"></div>
   <script>
-    var map = new maplibregl.Map({
-      container: 'map',
-      center: [0, 0],
-      zoom: 1,
-      hash: true,
-      maxZoom: 18
-    });
-    map.setStyle('eclipse.json', {
-        // The paths in the style are relative, but MapLibre GL JS needs
-        // absolute URLs. This is done below, taking the URL of the page
-        // for the path. This is because the page could be served on
-        // multiple domains, e.g. 127.0.0.1, vector.openstreetmap.org,
-        // or a specific server.
-        transformStyle: (previousStyle, nextStyle) => ({
+    function absoluteStyle(previousStyle, nextStyle) {
+        return {
             ...nextStyle,
             // make relative paths absolute
             sprite: [...nextStyle.sprite.map(s => {
@@ -42,7 +30,23 @@
                     // tiles: ["https://vector.openstreetmap.org" + nextStyle.sources["versatiles-shortbread"].tiles[0]]
                 },
             }
-        })
+        }
+    }
+
+    var map = new maplibregl.Map({
+      container: 'map',
+      center: [0, 0],
+      zoom: 1,
+      hash: true,
+      maxZoom: 18
+    });
+    map.setStyle('eclipse.json', {
+        // The paths in the style are relative, but MapLibre GL JS needs
+        // absolute URLs. This is done below, taking the URL of the page
+        // for the path. This is because the page could be served on
+        // multiple domains, e.g. 127.0.0.1, vector.openstreetmap.org,
+        // or a specific server.
+        transformStyle: absoluteStyle
     });
   </script>
 </body>

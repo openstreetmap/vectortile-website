@@ -1,4 +1,4 @@
-FROM node:22 AS versatiles
+FROM node:24 AS versatiles
 
 WORKDIR /app
 

@@ -1,6 +1,6 @@
 // Based heavily on https://github.com/versatiles-org/versatiles-style/blob/main/scripts/build-styles.ts
 import { writeFileSync, mkdirSync } from 'node:fs';
-import { eclipse } from "@versatiles/style";
+import { colorful, eclipse, graybeard, neutrino } from "@versatiles/style";
 import { StyleSpecification, validateStyleMin } from '@maplibre/maplibre-gl-style-spec';
 
 const saveLocation = "_versatiles/shortbread";
@@ -16,7 +16,10 @@ const dirDst = new URL(saveLocation, import.meta.url).pathname;
 mkdirSync(dirDst, { recursive: true });
 
 [
+	{ name: 'colorful', builder: colorful },
 	{ name: 'eclipse', builder: eclipse },
+	{ name: 'graybeard', builder: graybeard },
+	{ name: 'neutrino', builder: neutrino },
 ].forEach(({ name, builder }) => {
 	produce(name, builder(styleOptions));
 });

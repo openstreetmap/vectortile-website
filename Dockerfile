@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Install these from the official releases as building sprites and fonts is complex
 # The version here must match the version in package.json
-ADD https://github.com/versatiles-org/versatiles-style/releases/download/v5.6.0/sprites.tar.gz sprites.tar.gz
+ADD https://github.com/versatiles-org/versatiles-style/releases/download/v5.7.0/sprites.tar.gz sprites.tar.gz
 RUN mkdir -p _versatiles/shortbread/sprites && tar -C _versatiles/shortbread/sprites -xzf sprites.tar.gz && rm -f sprites.tar.gz
 
 ADD https://github.com/versatiles-org/versatiles-fonts/releases/download/v2.0.0/fonts.tar.gz fonts.tar.gz

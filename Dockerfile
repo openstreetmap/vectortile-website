@@ -28,7 +28,8 @@ FROM ghcr.io/nginxinc/nginx-unprivileged:stable-alpine AS webserver
 
 RUN echo "absolute_redirect off;" >/etc/nginx/conf.d/no-absolute_redirect.conf
 RUN echo "gzip_static on; gzip_proxied any;" >/etc/nginx/conf.d/gzip_static.conf
-RUN sed -i -e '/^    location \/ {/a \        add_header '\''Access-Control-Allow-Origin'\'' '\''*'\'' always;' /etc/nginx/conf.d/default.conf
+RUN sed -i -e '/^    location \/ {/a \        add_header '\''Access-Control-Allow-Origin'\'' '\''*'\'' always;' \
+           -e '/^    location \/ {/a \        add_header '\''Cache-Control'\'' '\''public,max-age=300,stale-while-revalidate=3600,stale-if-error=86400'\'' always;' /etc/nginx/conf.d/default.conf
 
 COPY demo /usr/share/nginx/html/demo
 COPY --from=versatiles /app/_versatiles /usr/share/nginx/html/demo

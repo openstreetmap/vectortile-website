@@ -1,5 +1,8 @@
 FROM node:24 AS versatiles
 
+ENV TZ=UTC
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 WORKDIR /app
 
 # Install these from the official releases as building sprites and fonts is complex

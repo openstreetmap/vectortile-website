@@ -2,7 +2,7 @@
   "dependencies": {
     "@maplibre/maplibre-gl-style-spec": "^23.3.0",
     "@versatiles/style": "~5.7.0",
-    "tsx": "^4.20.4"
+    "tsx": "^4.20.6"
   },
   "engines": { "node": ">=22.0.0"},
     "scripts": {

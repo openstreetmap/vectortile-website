@@ -22,7 +22,7 @@ COPY *.ts package.json package-lock.json /app/
 RUN npm install
 RUN npm run build
 
-RUN find /app/_versatiles/ -type f -size +512c \( -name "*.html" -o -name "*.css" -o -name "*.js" -o -name "*.xml" -o -name "*.json" -o -name "*.svg" -o -name "*.ttf" -o -name "*.woff2" -o -name "*.woff" -o -name "*.eot" -o -name "*.otf" -o -name "*.pbf" \) -print0 | xargs -0 -P4 --no-run-if-empty gzip -9k
+RUN find /app/_versatiles/ -type f -size +512c \( -name "*.html" -o -name "*.css" -o -name "*.js" -o -name "*.xml" -o -name "*.json" -o -name "*.svg" -o -name "*.ttf" -o -name "*.woff2" -o -name "*.woff" -o -name "*.eot" -o -name "*.otf" -o -name "*.pbf" \) -print0 | xargs -0 -P4 --no-run-if-empty gzip -9k --force --no-name
 
 FROM ghcr.io/nginx/nginx-unprivileged:stable AS webserver
 

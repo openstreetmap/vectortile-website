@@ -28,11 +28,11 @@ FROM ghcr.io/nginx/nginx-unprivileged:stable AS webserver
 
 RUN echo "absolute_redirect off;" >/etc/nginx/conf.d/no-absolute_redirect.conf
 RUN echo "gzip_static on; gzip_proxied any;" >/etc/nginx/conf.d/gzip_static.conf
-RUN sed -i -e '/^    location \/ {/a \        add_header '\''Access-Control-Allow-Origin'\'' '\''*'\'' always;' \
-           -e '/^    location \/ {/a \        add_header '\''Cache-Control'\'' '\''public,max-age=300,stale-while-revalidate=3600,stale-if-error=86400'\'' always;' /etc/nginx/conf.d/default.conf
+COPY default.conf /etc/nginx/conf.d/
 
 COPY demo /usr/share/nginx/html/demo
 COPY --from=versatiles /app/_versatiles /usr/share/nginx/html/demo
+COPY --from=versatiles /app/release /usr/share/nginx/html/styles
 
 RUN nginx -t
 

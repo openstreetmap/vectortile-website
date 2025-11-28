@@ -32,27 +32,6 @@
         'https://unpkg.com/@mapbox/mapbox-gl-rtl-text@0.3.0/dist/mapbox-gl-rtl-text.js',
         true // Lazy load the plugin
     );
-    function absoluteStyle(previousStyle, nextStyle) {
-        return {
-            ...nextStyle,
-            // make relative paths absolute
-            sprite: [...nextStyle.sprite.map(s => {
-                return {
-                    ...s,
-                    url: new URL(s.url, window.location.href).href,
-                }
-            })],
-            // URL will % encode the {} in nextStyle.glyphs, so assemble the URL manually
-            glyphs: window.location.origin + nextStyle.glyphs,
-            sources: {
-                "versatiles-shortbread": {
-                    ...nextStyle.sources["versatiles-shortbread"],
-                    tiles: [window.location.origin + nextStyle.sources["versatiles-shortbread"].tiles[0]]
-                    // tiles: ["https://vector.openstreetmap.org" + nextStyle.sources["versatiles-shortbread"].tiles[0]]
-                },
-            }
-        }
-    }
 
     var map = new maplibregl.Map({
       container: 'map',
@@ -61,14 +40,7 @@
       hash: true,
       maxZoom: 20 // A zoom level this high is a bit silly but helps testing
     });
-    map.setStyle('colorful.json', {
-        // The paths in the style are relative, but MapLibre GL JS needs
-        // absolute URLs. This is done below, taking the URL of the page
-        // for the path. This is because the page could be served on
-        // multiple domains, e.g. 127.0.0.1, vector.openstreetmap.org,
-        // or a specific server.
-        transformStyle: absoluteStyle
-    });
+    map.setStyle('/styles/shortbread/colorful.json');
     map.addControl(new MaplibreInspect({
       showInspectButton: false,
       showMapPopup: true,
@@ -76,7 +48,7 @@
       showInspectMapPopupOnHover: false
     }));
     document.querySelector('.mapstyles-select').addEventListener('change', (e) => {
-      map.setStyle(e.target.value + '.json', {transformStyle: absoluteStyle});
+      map.setStyle('/styles/' + e.target.value + '.json');
     });
   </script>
 </body>

@@ -17,8 +17,8 @@ const styleOptions = {
     language: undefined,
     baseUrl: 'https://vector.openstreetmap.org',
     tiles: ['/shortbread_v1/{z}/{x}/{y}.mvt'],
-    glyphs: '/demo/shortbread/fonts/{fontstack}/{range}.pbf',
-    sprite: [{ id: 'basics', url: '/demo/shortbread/sprites/basics/sprites' }]
+    glyphs: '/styles/shortbread/fonts/{fontstack}/{range}.pbf',
+    sprite: [{ id: 'basics', url: '/styles/shortbread/sprites/basics/sprites' }]
 }
 
 const demoDirDst = new URL(demoSaveLocation, import.meta.url).pathname;

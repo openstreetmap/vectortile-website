@@ -32,6 +32,18 @@
         'https://unpkg.com/@mapbox/mapbox-gl-rtl-text@0.3.0/dist/mapbox-gl-rtl-text.js',
         true // Lazy load the plugin
     );
+    const changeHost = url => location.origin + decodeURI(new URL(url).pathname);
+    function transformStyle(previousStyle, nextStyle) {
+      return {
+        ...nextStyle,
+        sprite: nextStyle.sprite.map(s => ({...s, url: changeHost(s.url)})),
+        glyphs: changeHost(nextStyle.glyphs),
+        sources: {"versatiles-shortbread": {
+          ...nextStyle.sources["versatiles-shortbread"],
+          tiles: [changeHost(nextStyle.sources["versatiles-shortbread"].tiles[0])]
+        }}
+      };
+    }
 
     var map = new maplibregl.Map({
       container: 'map',
@@ -40,7 +52,7 @@
       hash: true,
       maxZoom: 20 // A zoom level this high is a bit silly but helps testing
     });
-    map.setStyle('/styles/shortbread/colorful.json');
+    map.setStyle('/styles/shortbread/colorful.json', {transformStyle});
     map.addControl(new MaplibreInspect({
       showInspectButton: false,
       showMapPopup: true,
@@ -48,7 +60,7 @@
       showInspectMapPopupOnHover: false
     }));
     document.querySelector('.mapstyles-select').addEventListener('change', (e) => {
-      map.setStyle('/styles/shortbread/' + e.target.value + '.json');
+      map.setStyle('/styles/shortbread/' + e.target.value + '.json', {transformStyle});
     });
   </script>
 </body>

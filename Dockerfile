@@ -1,4 +1,4 @@
-FROM node:24 AS versatiles
+FROM node:25 AS versatiles
 
 ENV TZ=UTC
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]

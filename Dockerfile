@@ -1,4 +1,4 @@
-FROM node:24 AS versatiles
+FROM node:24 AS styles
 
 ENV TZ=UTC
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -26,9 +26,23 @@ RUN curl -SL --remote-time --output fonts.tar.gz https://github.com/versatiles-o
 
 COPY *.ts package.json package-lock.json /app/
 RUN npm install
-RUN npm run build
+RUN npm run build-versatiles
 
-RUN find /app/_versatiles/ -type f -size +512c \( -name "*.html" -o -name "*.css" -o -name "*.js" -o -name "*.xml" -o -name "*.json" -o -name "*.svg" -o -name "*.ttf" -o -name "*.woff2" -o -name "*.woff" -o -name "*.eot" -o -name "*.otf" -o -name "*.pbf" \) -print0 | xargs -0 -P4 --no-run-if-empty gzip -9k --force --no-name
+# Build the SVWD style
+WORKDIR /app
+
+RUN apt-get -q update && apt-get install -yqq curl git && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/SomeoneElseOSM/SomeoneElse-vector-web-display.git
+RUN git -C /app/SomeoneElse-vector-web-display checkout 25cd96ee0a887354ca3bd5c1a1824853afdf4220
+
+RUN mkdir -p /app/release/svwd/sprites
+RUN cp /app/SomeoneElse-vector-web-display/resources/svwd03sprite{@2x.json,@2x.png,.json,.png} /app/release/svwd/sprites
+
+RUN npm run build-svwd /app/SomeoneElse-vector-web-display/resources/svwd03_style.json
+RUN cp svwd03style.json /app/release/svwd/svwd03style.json
+
+# Precompress assets
 RUN find /app/release/ -type f -size +512c \( -name "*.html" -o -name "*.css" -o -name "*.js" -o -name "*.xml" -o -name "*.json" -o -name "*.svg" -o -name "*.ttf" -o -name "*.woff2" -o -name "*.woff" -o -name "*.eot" -o -name "*.otf" -o -name "*.pbf" \) -print0 | xargs -0 -P4 --no-run-if-empty gzip -9k --force --no-name
 
 FROM ghcr.io/nginx/nginx-unprivileged:stable AS webserver
@@ -38,8 +52,7 @@ RUN echo "gzip_static on; gzip_proxied any;" >/etc/nginx/conf.d/gzip_static.conf
 COPY default.conf /etc/nginx/conf.d/
 
 COPY demo /usr/share/nginx/html/demo
-COPY --from=versatiles /app/_versatiles /usr/share/nginx/html/demo
-COPY --from=versatiles /app/release /usr/share/nginx/html/styles
+COPY --from=styles /app/release /usr/share/nginx/html/styles
 
 RUN nginx -t
 

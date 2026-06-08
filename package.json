@@ -6,7 +6,7 @@
   },
   "engines": { "node": ">=22.0.0"},
     "scripts": {
-    "build": "npm run build-styles",
-    "build-styles": "tsx build-styles.ts"
+    "build-versatiles": "tsx build-styles.ts",
+    "build-svwd": "tsx build-svwd.ts"
   }
 }

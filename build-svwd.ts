@@ -3,9 +3,9 @@ import fs from 'fs';
 // TODO: use the full set of fonts from the website
 function setFonts(layer: any, index: number, arr: any[]): void {
   if (layer.layout?.['text-font'] == "KlokanTech Noto Sans Regular") {
-    arr[index].layout['text-font'] = ["Segoe UI", "Roboto", "Helvetica Neue", "Noto Sans", "Liberation Sans", "Arial"];
+    arr[index].layout['text-font'] = ["system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Noto Sans", "Liberation Sans", "Arial", "sans-serif"];
   } else if (layer.layout?.['text-font'] == "KlokanTech Noto Sans Italic") {
-    arr[index].layout['text-font'] = ["Segoe UI Italic", "Roboto Italic", "Helvetica Neue Italic", "Noto Sans Italic", "Liberation Sans Italic", "Arial Italic", "Segoe UI", "Roboto", "Helvetica Neue", "Noto Sans", "Liberation Sans", "Arial"];
+    arr[index].layout['text-font'] = ["Segoe UI Italic", "Roboto Italic", "Helvetica Neue Italic", "Noto Sans Italic", "Liberation Sans Italic", "Arial Italic", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Noto Sans", "Liberation Sans", "Arial"];
   }
 }
 

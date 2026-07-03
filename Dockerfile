@@ -34,7 +34,7 @@ WORKDIR /app
 RUN apt-get -q update && apt-get install -yqq curl git && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/SomeoneElseOSM/SomeoneElse-vector-web-display.git
-RUN git -C /app/SomeoneElse-vector-web-display checkout 5abc14f9912654d94d98f83e30fd847c676ab69c
+RUN git -C /app/SomeoneElse-vector-web-display checkout 7a0dc5277de800c7d8545420c68d2da360c09151
 
 RUN mkdir -p /app/release/svwd/sprites
 RUN cp /app/SomeoneElse-vector-web-display/resources/svwd03sprite{@2x.json,@2x.png,.json,.png} /app/release/svwd/sprites

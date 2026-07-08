@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@maplibre/maplibre-gl-style-spec": "^25.0.1",
+    "@maplibre/maplibre-gl-style-spec": "^25.0.2",
     "@versatiles/style": "~5.13.0",
     "tsx": "^4.23.0"
   },

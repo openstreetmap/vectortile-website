@@ -7,7 +7,7 @@ WORKDIR /app
 
 # Install these from the official releases as building sprites and fonts is complex
 # The version here must match the version in package.json
-RUN curl -SL --remote-time --output sprites.tar.gz https://github.com/versatiles-org/versatiles-style/releases/download/v5.13.0/sprites.tar.gz \
+RUN curl -SL --remote-time --output sprites.tar.gz https://github.com/versatiles-org/versatiles-style/releases/download/v6.2.0/sprites.tar.gz \
     && mkdir -p _versatiles/shortbread/sprites \
     && mkdir -p release/shortbread/sprites \
     && tar -C _versatiles/shortbread/sprites -xzf sprites.tar.gz \

@@ -17,7 +17,8 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-{{ github.head_ref || github.ref }}
+  # Keep PR checks and different publishing triggers in separate groups.
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

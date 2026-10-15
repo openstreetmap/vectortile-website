@@ -1,4 +1,4 @@
-FROM node:24 AS styles
+FROM node:26 AS styles
 
 ENV TZ=UTC
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]

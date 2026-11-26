@@ -5,9 +5,13 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 WORKDIR /app
 
+COPY package.json package-lock.json /app/
+RUN npm install
+
 # Install these from the official releases as building sprites and fonts is complex
-# The version here must match the version in package.json
-RUN curl -SL --remote-time --output sprites.tar.gz https://github.com/versatiles-org/versatiles-style/releases/download/v5.13.0/sprites.tar.gz \
+# The sprites must match the installed @versatiles/style, so their version is read from it
+RUN VERSATILES_STYLE_VERSION=$(node -p "require('./node_modules/@versatiles/style/package.json').version") \
+    && curl -SL --remote-time --output sprites.tar.gz "https://github.com/versatiles-org/versatiles-style/releases/download/v${VERSATILES_STYLE_VERSION}/sprites.tar.gz" \
     && mkdir -p _versatiles/shortbread/sprites \
     && mkdir -p release/shortbread/sprites \
     && tar -C _versatiles/shortbread/sprites -xzf sprites.tar.gz \
@@ -24,8 +28,7 @@ RUN curl -SL --remote-time --output fonts.tar.gz https://github.com/versatiles-o
     && find release/shortbread/fonts -type f -print0 | xargs -0 touch --reference fonts.tar.gz \
     && rm -f fonts.tar.gz
 
-COPY *.ts package.json package-lock.json /app/
-RUN npm install
+COPY *.ts /app/
 RUN npm run build-versatiles
 
 # Build the SVWD style
